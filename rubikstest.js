@@ -1,3 +1,22 @@
+let face1 = document.getElementById("1")
+let face2 = document.getElementById("2")
+let face3 = document.getElementById("3")
+let face4 = document.getElementById("4")
+let face5 = document.getElementById("5")
+let face6 = document.getElementById("6")
+let face7 = document.getElementById("7")
+let face8 = document.getElementById("8")
+let face9 = document.getElementById("9")
+
+let btnFront = document.getElementById("btnFront")
+let btnBack = document.getElementById("btnBack")
+let btnLeft = document.getElementById("btnLeft")
+let btnRight = document.getElementById("btnRight")
+let btnUp = document.getElementById("btnUp")
+let btnDown = document.getElementById("btnDown")
+
+let faceHeading = document.getElementById("face")
+
 let front = [
 	["blue-1", "blue-2", "blue-3"],
 	["blue-4", "blue-5", "blue-6"],
@@ -30,6 +49,54 @@ let down = [
 ]
 
 let cube = {front, right, left, back, up, down}
+const displayCube = (face) => {
+	face1.innerHTML= getNum(face[0][0])
+	face2.innerHTML= getNum(face[0][1])
+	face3.innerHTML= getNum(face[0][2])
+	face4.innerHTML= getNum(face[1][0])
+	face5.innerHTML= getNum(face[1][1])
+	face6.innerHTML= getNum(face[1][2])
+	face7.innerHTML= getNum(face[2][0])
+	face8.innerHTML= getNum(face[2][1])
+	face9.innerHTML= getNum(face[2][2])
+
+	face1.style.backgroundColor= getColour(face[0][0])
+	face2.style.backgroundColor= getColour(face[0][1])
+	face3.style.backgroundColor= getColour(face[0][2])
+	face4.style.backgroundColor= getColour(face[1][0])
+	face5.style.backgroundColor= getColour(face[1][1])
+	face6.style.backgroundColor= getColour(face[1][2])
+	face7.style.backgroundColor= getColour(face[2][0])
+	face8.style.backgroundColor= getColour(face[2][1])
+	face9.style.backgroundColor= getColour(face[2][2])
+
+}
+const getNum = (block) => {
+	let num = block.split("-")
+	return (num[1])
+}
+
+const getColour = (block) => {
+	let col = block.split("-")
+	switch (col[0]) {
+		case "blue":
+			return "#0000ff"
+		case "yellow":
+			return "#ffff00"
+		case "red":
+			return "#ff0000"
+		case "green":
+			return "#00ff00"
+		case "white":
+			return "#ffffff"
+		case "orange":
+			return "#FFA500"
+		default:
+			break;
+	}
+}
+
+
 
 const rotateFace = (face, dir=0) => {
 	let faceCopy = JSON.parse(JSON.stringify(face));
@@ -132,11 +199,83 @@ const applyRi = (cube) => {
 }
 /*-------------------------------------------------------*/
 
+//Right
+/*-------------------------------------------------------*/
+const applyL = (cube) => {
+	let cubeCopy = JSON.parse(JSON.stringify(cube));
+	cube.down[0][0] = cubeCopy.front[0][0]
+	cube.down[1][0] = cubeCopy.front[1][0]
+	cube.down[2][0] = cubeCopy.front[2][0]
+
+	cube.front[0][0] = cubeCopy.up[0][0]
+	cube.front[1][0] = cubeCopy.up[1][0]
+	cube.front[2][0] = cubeCopy.up[2][0]
+
+	cube.up[0][0] = cubeCopy.back[2][2]
+	cube.up[1][0] = cubeCopy.back[1][2]
+	cube.up[2][0] = cubeCopy.back[0][2]
+
+	cube.back[0][2] = cubeCopy.down[2][0]
+	cube.back[1][2] = cubeCopy.down[1][0]
+	cube.back[2][2] = cubeCopy.down[0][0]
+	
+	rotateFace(cube.left, 1)
+}
+
+const applyLi = (cube) => {
+	let cubeCopy = JSON.parse(JSON.stringify(cube));
+	cube.front[0][0] = cubeCopy.down[0][0]
+	cube.front[1][0] = cubeCopy.down[1][0]
+	cube.front[2][0] = cubeCopy.down[2][0]
+
+	cube.up[0][0] = cubeCopy.front[0][0]
+	cube.up[1][0] = cubeCopy.front[1][0]
+	cube.up[2][0] = cubeCopy.front[2][0]
+
+	cube.back[0][2] = cubeCopy.up[2][0]
+	cube.back[1][2] = cubeCopy.up[1][0]
+	cube.back[2][2] = cubeCopy.up[0][0]
+
+	cube.down[0][0] = cubeCopy.back[2][2]
+	cube.down[1][0] = cubeCopy.back[1][2]
+	cube.down[2][0] = cubeCopy.back[0][2]
+	
+	rotateFace(cube.left)
+}
+/*-------------------------------------------------------*/
+
 applyU(cube)
 applyR(cube)
+applyL(cube)
+
+applyLi(cube)
 applyRi(cube)
 applyUi(cube)
 
-console.log(cube);
 
+displayCube(cube.front)
+btnFront.onclick = () => {
+	displayCube(cube.front);
+	faceHeading.innerHTML="Front"
+}
 
+btnBack.onclick = () => {
+	displayCube(cube.back)
+	faceHeading.innerHTML="Back"
+}
+btnLeft.onclick = () => {
+	displayCube(cube.left)
+	faceHeading.innerHTML="Left"
+}
+btnRight.onclick = () => {
+	displayCube(cube.right)
+	faceHeading.innerHTML="Right"
+}
+btnUp.onclick = () => {
+	displayCube(cube.up)
+	faceHeading.innerHTML="Up"
+}
+btnDown.onclick = () => {
+	displayCube(cube.down)
+	faceHeading.innerHTML="Down"
+}

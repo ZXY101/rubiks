@@ -5,8 +5,48 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
 </head>
+<style>
+	.container {
+		padding: 10px;
+	}
+	.grid-container {
+	  display: grid;
+	  grid-template-columns: 100px 100px 100px;
+	  padding: 10px;
+	}
+	.grid-item {
+	  border: 1px solid rgba(0, 0, 0, 0.8);
+	  padding: 20px;
+	  font-size: 30px;
+	  text-align: center;
+	}
+	#face{
+		margin: auto;
+		padding-bottom: 10px;
+	}
+	</style>
 <body>
-	H
-	<script src="rubikstest.js"/>
+	<div class="grid-container">
+		<div class="grid-item" id="1">1</div>
+		<div class="grid-item" id="2">2</div>
+		<div class="grid-item" id="3">3</div>
+		<div class="grid-item" id="4">4</div>
+		<div class="grid-item" id="5">5</div>
+		<div class="grid-item" id="6">6</div>
+		<div class="grid-item" id="7">7</div>
+		<div class="grid-item" id="8">8</div>
+		<div class="grid-item" id="9">9</div>
+	</div> 
+	<div class="container">
+		<h1 id="face">Front</h1>
+		<button id="btnFront">Front</button>
+		<button id="btnBack">Back</button>
+		<button id="btnLeft">Left</button>
+		<button id="btnRight">Right</button>
+		<button id="btnUp">Up</button>
+		<button id="btnDown">Down</button>
+	</div>
+	<script src="rubikstest.js"></script>
+
 </body>
 </html>
