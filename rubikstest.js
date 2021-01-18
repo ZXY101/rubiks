@@ -15,40 +15,127 @@ let btnRight = document.getElementById("btnRight")
 let btnUp = document.getElementById("btnUp")
 let btnDown = document.getElementById("btnDown")
 
+let btnApply = document.getElementById("btnApply")
+let btnSolve = document.getElementById("btnSolve")
+let btnReset = document.getElementById("btnReset")
+let moveInput = document.getElementById("moveInput")
+
 let faceHeading = document.getElementById("face")
 
-let front = [
-	["green-1", "green-2", "green-3"],
-	["green-4", "green-5", "green-6"],
-	["green-7", "green-8", "green-9"],
-]
-let right = [
-	["red-1", "red-2", "red-3"],
-	["red-4", "red-5", "red-6"],
-	["red-7", "red-8", "red-9"],
-]
-let left = [
-	["orange-1", "orange-2", "orange-3"],
-	["orange-4", "orange-5", "orange-6"],
-	["orange-7", "orange-8", "orange-9"],
-]
-let back = [
-	["blue-1", "blue-2", "blue-3"],
-	["blue-4", "blue-5", "blue-6"],
-	["blue-7", "blue-8", "blue-9"],
-]
-let up = [
-	["white-1", "white-2", "white-3"],
-	["white-4", "white-5", "white-6"],
-	["white-7", "white-8", "white-9"],
-]
-let down = [
-	["yellow-1", "yellow-2", "yellow-3"],
-	["yellow-4", "yellow-5", "yellow-6"],
-	["yellow-7", "yellow-8", "yellow-9"],
-]
+class Cube {
+	constructor(){
+		this.front = [
+				["green-1", "green-2", "green-3"],
+				["green-4", "green-5", "green-6"],
+				["green-7", "green-8", "green-9"],
+			];
+		this.right = [
+				["red-1", "red-2", "red-3"],
+				["red-4", "red-5", "red-6"],
+				["red-7", "red-8", "red-9"],
+			];
+		this.left = [
+				["orange-1", "orange-2", "orange-3"],
+				["orange-4", "orange-5", "orange-6"],
+				["orange-7", "orange-8", "orange-9"],
+			];
+		this.back = [
+				["blue-1", "blue-2", "blue-3"],
+				["blue-4", "blue-5", "blue-6"],
+				["blue-7", "blue-8", "blue-9"],
+			];
+		this.up = [
+				["white-1", "white-2", "white-3"],
+				["white-4", "white-5", "white-6"],
+				["white-7", "white-8", "white-9"],
+			];
+		this.down = [
+				["yellow-1", "yellow-2", "yellow-3"],
+				["yellow-4", "yellow-5", "yellow-6"],
+				["yellow-7", "yellow-8", "yellow-9"],
+			];
+	}
+}
 
-let cube = {front, right, left, back, up, down}
+let cube = new Cube();
+
+const applyMoves = (cube, moves) => {
+	moves.forEach((move) => {
+		switch (move) {
+			case "U":
+				applyU(cube)
+				break;
+			case "U'":
+				applyUi(cube)
+				break;
+			case "U2":
+				applyU(cube)
+				applyU(cube)
+				break;
+
+			case "D":
+				applyD(cube)
+				break;
+			case "D'":
+				applyDi(cube)
+				break;
+			case "D2":
+				applyD(cube)
+				applyD(cube)
+				break;
+
+			case "F":
+				applyF(cube)
+				break;
+			case "F'":
+				applyFi(cube)
+				break;
+			case "F2":
+				applyF(cube)
+				applyF(cube)
+				break;
+
+			case "L":
+				applyL(cube)
+				break;
+			case "L'":
+				applyLi(cube)
+				break;
+			case "L2":
+				applyL(cube)
+				applyL(cube)
+				break;
+
+			case "R":
+				applyR(cube)
+				break;
+			case "R'":
+				applyRi(cube)
+				break;
+			case "R2":
+				applyR(cube)
+				applyR(cube)
+				break;
+
+			case "B":
+				applyB(cube)
+				break;
+			case "B'":
+				applyBi(cube)
+				break;
+			case "B2":
+				applyB(cube)
+				applyB(cube)
+				break;
+			default:
+				console.log('Why');
+				
+				break;
+		}
+	})
+
+}
+
 const displayCube = (face) => {
 	face1.innerHTML= getNum(face[0][0])
 	face2.innerHTML= getNum(face[0][1])
@@ -96,8 +183,6 @@ const getColour = (block) => {
 	}
 }
 
-
-
 const rotateFace = (face, dir=0) => {
 	let faceCopy = JSON.parse(JSON.stringify(face));
 	n = 3
@@ -121,6 +206,7 @@ const applyU = (cube) => {
 	cube.right[0] = cubeCopy.back[0]
 	cube.front[0] = cubeCopy.right[0]
 	rotateFace(cube.up)
+	console.log("Applying: U");
 }
 
 const applyUi = (cube) => {
@@ -130,6 +216,7 @@ const applyUi = (cube) => {
 	cube.right[0] = cubeCopy.front[0]
 	cube.front[0] = cubeCopy.left[0]
 	rotateFace(cube.up, 1)
+	console.log("Applying: Ui");
 }
 /*-------------------------------------------------------*/
 
@@ -142,6 +229,7 @@ const applyDi = (cube) => {
 	cube.right[2] = cubeCopy.back[2]
 	cube.front[2] = cubeCopy.right[2]
 	rotateFace(cube.down, 1)
+	console.log("Applying: Di");
 }
 
 const applyD = (cube) => {
@@ -151,6 +239,7 @@ const applyD = (cube) => {
 	cube.right[2] = cubeCopy.front[2]
 	cube.front[2] = cubeCopy.left[2]
 	rotateFace(cube.down)
+	console.log("Applying: D");
 }
 /*-------------------------------------------------------*/
 
@@ -175,6 +264,7 @@ const applyR = (cube) => {
 	cube.down[2][2] = cubeCopy.back[0][0]
 	
 	rotateFace(cube.right)
+	console.log("Applying: R");
 }
 
 const applyRi = (cube) => {
@@ -196,6 +286,7 @@ const applyRi = (cube) => {
 	cube.back[2][0] = cubeCopy.down[0][2]
 	
 	rotateFace(cube.right, 1)
+	console.log("Applying: Ri");
 }
 /*-------------------------------------------------------*/
 
@@ -220,6 +311,7 @@ const applyL = (cube) => {
 	cube.back[2][2] = cubeCopy.down[0][0]
 	
 	rotateFace(cube.left)
+	console.log("Applying: L");
 }
 
 const applyLi = (cube) => {
@@ -241,6 +333,7 @@ const applyLi = (cube) => {
 	cube.down[2][0] = cubeCopy.back[0][2]
 	
 	rotateFace(cube.left, 1)
+	console.log("Applying: Li");
 }
 /*-------------------------------------------------------*/
 
@@ -265,6 +358,7 @@ const applyF = (cube) => {
 	cube.left[2][2] = cubeCopy.down[0][2]
 
 	rotateFace(cube.front)
+	console.log("Applying: F");
 }
 
 const applyFi = (cube) => {
@@ -286,6 +380,7 @@ const applyFi = (cube) => {
 	cube.left[2][2] = cubeCopy.up[2][0]
 	
 	rotateFace(cube.front, 1)
+	console.log("Applying: Fi");
 }
 /*-------------------------------------------------------*/
 
@@ -310,6 +405,7 @@ const applyBi = (cube) => {
 	cube.left[2][0] = cubeCopy.down[2][2]
 
 	rotateFace(cube.back, 1)
+	console.log("Applying: Bi");
 }
 
 const applyB = (cube) => {
@@ -331,10 +427,12 @@ const applyB = (cube) => {
 	cube.left[2][0] = cubeCopy.up[0][0]
 	
 	rotateFace(cube.back)
+	console.log("Applying: B");
 }
 /*-------------------------------------------------------*/
 
 displayCube(cube.front)
+
 btnFront.onclick = () => {
 	displayCube(cube.front);
 	faceHeading.innerHTML="Front"
@@ -360,3 +458,19 @@ btnDown.onclick = () => {
 	displayCube(cube.down)
 	faceHeading.innerHTML="Down"
 }
+
+btnApply.onclick = () => {
+	let moves = moveInput.value.replaceAll("’", "'")
+	applyMoves(cube, moves.split(" "))
+	displayCube(cube.front)
+}
+
+btnReset.onclick = () => {
+	moveInput.value = ""
+	cube = new Cube()
+	displayCube(cube.front)
+}
+
+
+//R2 D’ B’ D F2 R F2 R2 U L’ F2 U’ B’ L2 R D B’ R’ B2 L2 F2 L2 R2 U2 D2
+//R2 D' B' D F2 R F2 R2 U L' F2 U' B' L2 R D B' R' B2 L2 F2 L2 R2 U2 D2
