@@ -18,24 +18,24 @@ let btnDown = document.getElementById("btnDown")
 let faceHeading = document.getElementById("face")
 
 let front = [
-	["blue-1", "blue-2", "blue-3"],
-	["blue-4", "blue-5", "blue-6"],
-	["blue-7", "blue-8", "blue-9"],
+	["green-1", "green-2", "green-3"],
+	["green-4", "green-5", "green-6"],
+	["green-7", "green-8", "green-9"],
 ]
 let right = [
-	["orange-1", "orange-2", "orange-3"],
-	["orange-4", "orange-5", "orange-6"],
-	["orange-7", "orange-8", "orange-9"],
-]
-let left = [
 	["red-1", "red-2", "red-3"],
 	["red-4", "red-5", "red-6"],
 	["red-7", "red-8", "red-9"],
 ]
+let left = [
+	["orange-1", "orange-2", "orange-3"],
+	["orange-4", "orange-5", "orange-6"],
+	["orange-7", "orange-8", "orange-9"],
+]
 let back = [
-	["green-1", "green-2", "green-3"],
-	["green-4", "green-5", "green-6"],
-	["green-7", "green-8", "green-9"],
+	["blue-1", "blue-2", "blue-3"],
+	["blue-4", "blue-5", "blue-6"],
+	["blue-7", "blue-8", "blue-9"],
 ]
 let up = [
 	["white-1", "white-2", "white-3"],
@@ -135,22 +135,22 @@ const applyUi = (cube) => {
 
 //Down
 /*-------------------------------------------------------*/
-const applyD = (cube) => {
+const applyDi = (cube) => {
 	let cubeCopy = JSON.parse(JSON.stringify(cube));
 	cube.left[2] = cubeCopy.front[2]
 	cube.back[2] = cubeCopy.left[2]
 	cube.right[2] = cubeCopy.back[2]
 	cube.front[2] = cubeCopy.right[2]
-	rotateFace(cube.down)
+	rotateFace(cube.down, 1)
 }
 
-const applyDi = (cube) => {
+const applyD = (cube) => {
 	let cubeCopy = JSON.parse(JSON.stringify(cube));
 	cube.left[2] = cubeCopy.back[2]
 	cube.back[2] = cubeCopy.right[2]
 	cube.right[2] = cubeCopy.front[2]
 	cube.front[2] = cubeCopy.left[2]
-	rotateFace(cube.down, 1)
+	rotateFace(cube.down)
 }
 /*-------------------------------------------------------*/
 
@@ -199,7 +199,7 @@ const applyRi = (cube) => {
 }
 /*-------------------------------------------------------*/
 
-//Right
+//Left
 /*-------------------------------------------------------*/
 const applyL = (cube) => {
 	let cubeCopy = JSON.parse(JSON.stringify(cube));
@@ -219,7 +219,7 @@ const applyL = (cube) => {
 	cube.back[1][2] = cubeCopy.down[1][0]
 	cube.back[2][2] = cubeCopy.down[0][0]
 	
-	rotateFace(cube.left, 1)
+	rotateFace(cube.left)
 }
 
 const applyLi = (cube) => {
@@ -240,18 +240,99 @@ const applyLi = (cube) => {
 	cube.down[1][0] = cubeCopy.back[1][2]
 	cube.down[2][0] = cubeCopy.back[0][2]
 	
-	rotateFace(cube.left)
+	rotateFace(cube.left, 1)
 }
 /*-------------------------------------------------------*/
 
-applyU(cube)
-applyR(cube)
-applyL(cube)
+//Front
+/*-------------------------------------------------------*/
+const applyF = (cube) => {
+	let cubeCopy = JSON.parse(JSON.stringify(cube));
+	cube.up[2][0] = cubeCopy.left[2][2]
+	cube.up[2][1] = cubeCopy.left[1][2]
+	cube.up[2][2] = cubeCopy.left[0][2]
 
-applyLi(cube)
-applyRi(cube)
-applyUi(cube)
+	cube.right[0][0] = cubeCopy.up[2][0]
+	cube.right[1][0] = cubeCopy.up[2][1]
+	cube.right[2][0] = cubeCopy.up[2][2]
 
+	cube.down[0][0] = cubeCopy.right[2][0]
+	cube.down[0][1] = cubeCopy.right[1][0]
+	cube.down[0][2] = cubeCopy.right[0][0]
+
+	cube.left[0][2] = cubeCopy.down[0][0]
+	cube.left[1][2] = cubeCopy.down[0][1]
+	cube.left[2][2] = cubeCopy.down[0][2]
+
+	rotateFace(cube.front)
+}
+
+const applyFi = (cube) => {
+	let cubeCopy = JSON.parse(JSON.stringify(cube));
+	cube.up[2][0] = cubeCopy.right[0][0]
+	cube.up[2][1] = cubeCopy.right[1][0]
+	cube.up[2][2] = cubeCopy.right[2][0]
+
+	cube.right[0][0] = cubeCopy.down[0][2]
+	cube.right[1][0] = cubeCopy.down[0][1]
+	cube.right[2][0] = cubeCopy.down[0][0]
+
+	cube.down[0][0] = cubeCopy.left[0][2]
+	cube.down[0][1] = cubeCopy.left[1][2]
+	cube.down[0][2] = cubeCopy.left[2][2]
+
+	cube.left[0][2] = cubeCopy.up[2][2]
+	cube.left[1][2] = cubeCopy.up[2][1]
+	cube.left[2][2] = cubeCopy.up[2][0]
+	
+	rotateFace(cube.front, 1)
+}
+/*-------------------------------------------------------*/
+
+//Back
+/*-------------------------------------------------------*/
+const applyBi = (cube) => {
+	let cubeCopy = JSON.parse(JSON.stringify(cube));
+	cube.up[0][0] = cubeCopy.left[2][0]
+	cube.up[0][1] = cubeCopy.left[1][0]
+	cube.up[0][2] = cubeCopy.left[0][0]
+
+	cube.right[0][2] = cubeCopy.up[0][0]
+	cube.right[1][2] = cubeCopy.up[0][1]
+	cube.right[2][2] = cubeCopy.up[0][2]
+
+	cube.down[2][0] = cubeCopy.right[2][2]
+	cube.down[2][1] = cubeCopy.right[1][2]
+	cube.down[2][2] = cubeCopy.right[0][2]
+
+	cube.left[0][0] = cubeCopy.down[2][0]
+	cube.left[1][0] = cubeCopy.down[2][1]
+	cube.left[2][0] = cubeCopy.down[2][2]
+
+	rotateFace(cube.back, 1)
+}
+
+const applyB = (cube) => {
+	let cubeCopy = JSON.parse(JSON.stringify(cube));
+	cube.up[0][0] = cubeCopy.right[0][2]
+	cube.up[0][1] = cubeCopy.right[1][2]
+	cube.up[0][2] = cubeCopy.right[2][2]
+
+	cube.right[0][2] = cubeCopy.down[2][2]
+	cube.right[1][2] = cubeCopy.down[2][1]
+	cube.right[2][2] = cubeCopy.down[2][0]
+
+	cube.down[2][0] = cubeCopy.left[0][0]
+	cube.down[2][1] = cubeCopy.left[1][0]
+	cube.down[2][2] = cubeCopy.left[2][0]
+
+	cube.left[0][0] = cubeCopy.up[0][2]
+	cube.left[1][0] = cubeCopy.up[0][1]
+	cube.left[2][0] = cubeCopy.up[0][0]
+	
+	rotateFace(cube.back)
+}
+/*-------------------------------------------------------*/
 
 displayCube(cube.front)
 btnFront.onclick = () => {
