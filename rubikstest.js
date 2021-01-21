@@ -25,107 +25,101 @@ let faceHeading = document.getElementById("face")
 class Cube {
 	constructor(){
 		this.front = [
-				["green-1", "green-2", "green-3"],
-				["green-4", "green-5", "green-6"],
-				["green-7", "green-8", "green-9"],
+				["green", "green", "green"],
+				["green", "green", "green"],
+				["green", "green", "green"],
 			];
 		this.right = [
-				["red-1", "red-2", "red-3"],
-				["red-4", "red-5", "red-6"],
-				["red-7", "red-8", "red-9"],
+				["red", "red", "red"],
+				["red", "red", "red"],
+				["red", "red", "red"],
 			];
 		this.left = [
-				["orange-1", "orange-2", "orange-3"],
-				["orange-4", "orange-5", "orange-6"],
-				["orange-7", "orange-8", "orange-9"],
+				["orange", "orange", "orange"],
+				["orange", "orange", "orange"],
+				["orange", "orange", "orange"],
 			];
 		this.back = [
-				["blue-1", "blue-2", "blue-3"],
-				["blue-4", "blue-5", "blue-6"],
-				["blue-7", "blue-8", "blue-9"],
+				["blue", "blue", "blue"],
+				["blue", "blue", "blue"],
+				["blue", "blue", "blue"],
 			];
 		this.up = [
-				["white-1", "white-2", "white-3"],
-				["white-4", "white-5", "white-6"],
-				["white-7", "white-8", "white-9"],
+				["white", "white", "white"],
+				["white", "white", "white"],
+				["white", "white", "white"],
 			];
 		this.down = [
-				["yellow-1", "yellow-2", "yellow-3"],
-				["yellow-4", "yellow-5", "yellow-6"],
-				["yellow-7", "yellow-8", "yellow-9"],
+				["yellow", "yellow", "yellow"],
+				["yellow", "yellow", "yellow"],
+				["yellow", "yellow", "yellow"],
 			];
 	}
 }
 
 let cube = new Cube();
 
-const applyMoves = (cube, moves) => {
+const applyMoves = (moves) => {
 	moves.forEach((move) => {
 		switch (move) {
 			case "U":
-				applyU(cube)
+				applyU()
 				break;
 			case "U'":
-				applyUi(cube)
+				applyUi()
 				break;
 			case "U2":
-				applyU(cube)
-				applyU(cube)
+				applyU2()
 				break;
 
 			case "D":
-				applyD(cube)
+				applyD()
 				break;
 			case "D'":
-				applyDi(cube)
+				applyDi()
 				break;
 			case "D2":
-				applyD(cube)
-				applyD(cube)
+				applyD2()
 				break;
 
 			case "F":
-				applyF(cube)
+				applyF()
 				break;
 			case "F'":
-				applyFi(cube)
+				applyFi()
 				break;
 			case "F2":
-				applyF(cube)
-				applyF(cube)
+				applyF2()
 				break;
 
 			case "L":
-				applyL(cube)
+				applyL()
 				break;
 			case "L'":
-				applyLi(cube)
+				applyLi()
 				break;
 			case "L2":
-				applyL(cube)
-				applyL(cube)
+				applyL2()
 				break;
 
 			case "R":
-				applyR(cube)
+				applyR()
 				break;
 			case "R'":
-				applyRi(cube)
+				applyRi()
 				break;
 			case "R2":
-				applyR(cube)
-				applyR(cube)
+				applyR2()
 				break;
 
 			case "B":
-				applyB(cube)
+				applyB()
 				break;
 			case "B'":
-				applyBi(cube)
+				applyBi()
 				break;
 			case "B2":
-				applyB(cube)
-				applyB(cube)
+				applyB2()
 				break;
 			default:
 				console.log('Why');
@@ -137,16 +131,6 @@ const applyMoves = (cube, moves) => {
 }
 
 const displayCube = (face) => {
-	face1.innerHTML= getNum(face[0][0])
-	face2.innerHTML= getNum(face[0][1])
-	face3.innerHTML= getNum(face[0][2])
-	face4.innerHTML= getNum(face[1][0])
-	face5.innerHTML= getNum(face[1][1])
-	face6.innerHTML= getNum(face[1][2])
-	face7.innerHTML= getNum(face[2][0])
-	face8.innerHTML= getNum(face[2][1])
-	face9.innerHTML= getNum(face[2][2])
-
 	face1.style.backgroundColor= getColour(face[0][0])
 	face2.style.backgroundColor= getColour(face[0][1])
 	face3.style.backgroundColor= getColour(face[0][2])
@@ -157,10 +141,6 @@ const displayCube = (face) => {
 	face8.style.backgroundColor= getColour(face[2][1])
 	face9.style.backgroundColor= getColour(face[2][2])
 
-}
-const getNum = (block) => {
-	let num = block.split("-")
-	return (num[1])
 }
 
 const getColour = (block) => {
@@ -183,6 +163,16 @@ const getColour = (block) => {
 	}
 }
 
+const turnCube = () =>{
+	let cubeCopy = JSON.parse(JSON.stringify(cube));
+	cube.front = cubeCopy.right
+	cube.right = cubeCopy.back
+	cube.back = cubeCopy.left
+	cube.left = cubeCopy.front
+	rotateFace(cube.up)
+	rotateFace(cube.down, 1)
+}
+
 const rotateFace = (face, dir=0) => {
 	let faceCopy = JSON.parse(JSON.stringify(face));
 	n = 3
@@ -199,7 +189,7 @@ const rotateFace = (face, dir=0) => {
 
 //Up
 /*-------------------------------------------------------*/
-const applyU = (cube) => {
+const applyU = () => {
 	let cubeCopy = JSON.parse(JSON.stringify(cube));
 	cube.left[0] = cubeCopy.front[0]
 	cube.back[0] = cubeCopy.left[0]
@@ -209,7 +199,7 @@ const applyU = (cube) => {
 	console.log("Applying: U");
 }
 
-const applyUi = (cube) => {
+const applyUi = () => {
 	let cubeCopy = JSON.parse(JSON.stringify(cube));
 	cube.left[0] = cubeCopy.back[0]
 	cube.back[0] = cubeCopy.right[0]
@@ -222,7 +212,7 @@ const applyUi = (cube) => {
 
 //Down
 /*-------------------------------------------------------*/
-const applyDi = (cube) => {
+const applyDi = () => {
 	let cubeCopy = JSON.parse(JSON.stringify(cube));
 	cube.left[2] = cubeCopy.front[2]
 	cube.back[2] = cubeCopy.left[2]
@@ -232,7 +222,7 @@ const applyDi = (cube) => {
 	console.log("Applying: Di");
 }
 
-const applyD = (cube) => {
+const applyD = () => {
 	let cubeCopy = JSON.parse(JSON.stringify(cube));
 	cube.left[2] = cubeCopy.back[2]
 	cube.back[2] = cubeCopy.right[2]
@@ -245,7 +235,7 @@ const applyD = (cube) => {
 
 //Right
 /*-------------------------------------------------------*/
-const applyR = (cube) => {
+const applyR = () => {
 	let cubeCopy = JSON.parse(JSON.stringify(cube));
 	cube.front[0][2] = cubeCopy.down[0][2]
 	cube.front[1][2] = cubeCopy.down[1][2]
@@ -267,7 +257,7 @@ const applyR = (cube) => {
 	console.log("Applying: R");
 }
 
-const applyRi = (cube) => {
+const applyRi = () => {
 	let cubeCopy = JSON.parse(JSON.stringify(cube));
 	cube.down[0][2] = cubeCopy.front[0][2]
 	cube.down[1][2] = cubeCopy.front[1][2]
@@ -292,7 +282,7 @@ const applyRi = (cube) => {
 
 //Left
 /*-------------------------------------------------------*/
-const applyL = (cube) => {
+const applyL = () => {
 	let cubeCopy = JSON.parse(JSON.stringify(cube));
 	cube.down[0][0] = cubeCopy.front[0][0]
 	cube.down[1][0] = cubeCopy.front[1][0]
@@ -314,7 +304,7 @@ const applyL = (cube) => {
 	console.log("Applying: L");
 }
 
-const applyLi = (cube) => {
+const applyLi = () => {
 	let cubeCopy = JSON.parse(JSON.stringify(cube));
 	cube.front[0][0] = cubeCopy.down[0][0]
 	cube.front[1][0] = cubeCopy.down[1][0]
@@ -339,7 +329,7 @@ const applyLi = (cube) => {
 
 //Front
 /*-------------------------------------------------------*/
-const applyF = (cube) => {
+const applyF = () => {
 	let cubeCopy = JSON.parse(JSON.stringify(cube));
 	cube.up[2][0] = cubeCopy.left[2][2]
 	cube.up[2][1] = cubeCopy.left[1][2]
@@ -361,7 +351,7 @@ const applyF = (cube) => {
 	console.log("Applying: F");
 }
 
-const applyFi = (cube) => {
+const applyFi = () => {
 	let cubeCopy = JSON.parse(JSON.stringify(cube));
 	cube.up[2][0] = cubeCopy.right[0][0]
 	cube.up[2][1] = cubeCopy.right[1][0]
@@ -386,7 +376,7 @@ const applyFi = (cube) => {
 
 //Back
 /*-------------------------------------------------------*/
-const applyBi = (cube) => {
+const applyBi = () => {
 	let cubeCopy = JSON.parse(JSON.stringify(cube));
 	cube.up[0][0] = cubeCopy.left[2][0]
 	cube.up[0][1] = cubeCopy.left[1][0]
@@ -408,7 +398,7 @@ const applyBi = (cube) => {
 	console.log("Applying: Bi");
 }
 
-const applyB = (cube) => {
+const applyB = () => {
 	let cubeCopy = JSON.parse(JSON.stringify(cube));
 	cube.up[0][0] = cubeCopy.right[0][2]
 	cube.up[0][1] = cubeCopy.right[1][2]
@@ -428,6 +418,140 @@ const applyB = (cube) => {
 	
 	rotateFace(cube.back)
 	console.log("Applying: B");
+}
+
+const applyU2 = () => {applyU(); applyU();}
+const applyD2 = () => {applyD(); applyD();}
+const applyR2 = () => {applyR(); applyR();}
+const applyL2 = () => {applyL(); applyL();}
+const applyF2 = () => {applyF(); applyF();}
+const applyB2 = () => {applyB(); applyB();}
+
+/*-------------------------------------------------------*/
+
+const isWhiteEdgeSolved = (edge) =>{
+	if (cube.front[0][1] == edge && cube.up[2][1] == "white"){
+		return true
+	}
+}
+
+const placeWhiteFromFront = (edge) => {
+	if (cube.front[1][2] == edge && cube.right[1][0] == "white"){
+		applyFi()
+		return true
+	}
+	if (cube.front[1][0] == edge && cube.left[1][2] == "white"){
+		applyF()
+		return true
+	}
+	if (cube.front[2][1] == edge && cube.down[0][1] == "white"){
+		applyF()
+		applyF()
+		return true
+	}
+
+	if (cube.front[0][1] == "white" && cube.up[2][1] == edge){
+		applyF2()
+		applyD()
+		applyR()
+		applyFi()
+		applyRi()
+		return true
+	}
+
+	if (cube.front[1][2] == "white" && cube.right[1][0] == edge){
+		applyF()
+		applyD()
+		applyR()
+		applyFi()
+		applyRi()
+		return true
+	}
+
+	if (cube.front[1][0] == "white" && cube.left[1][2] == edge){
+		applyFi()
+		applyD()
+		applyR()
+		applyFi()
+		applyRi()
+		return true
+	}
+
+	if (cube.front[2][1] == "white" && cube.down[0][1] == edge){
+		applyD()
+		applyR()
+		applyFi()
+		applyRi()
+		return true
+	}
+}
+
+const solveWhiteEdge = (edge) => {
+	console.log(edge);
+	if (!(cube.front[0][1] == edge && cube.up[2][1] == "white")){
+		if (placeWhiteFromFront(edge)){
+			return
+		}
+		else{
+			if ((cube.right[0][1] == "white" || cube.right[0][1] == edge) && (cube.up[1][2] == "white" || cube.up[1][2] == edge)){
+				applyRi();
+				placeWhiteFromFront(edge)
+			}
+			if ((cube.right[2][1] == "white" || cube.right[2][1] == edge) && (cube.down[1][2] == "white" || cube.down[1][2] == edge)){
+				applyDi();
+				placeWhiteFromFront(edge)
+			}
+			if ((cube.right[1][2] == "white" || cube.right[1][2] == edge) && (cube.back[1][0] == "white" || cube.back[1][0] == edge)){
+				applyR()
+				applyDi()
+				applyRi()
+				placeWhiteFromFront(edge)
+			}
+
+			if ((cube.left[0][1] == "white" || cube.left[0][1] == edge) && (cube.up[1][0] == "white" || cube.up[1][0] == edge)){
+				applyL();
+				placeWhiteFromFront(edge)
+			}
+			if ((cube.left[2][1] == "white" || cube.left[2][1] == edge) && (cube.down[1][0] == "white" || cube.down[1][0] == edge)){
+				applyD();
+				placeWhiteFromFront(edge)
+			}
+			if ((cube.left[1][0] == "white" || cube.left[1][0] == edge) && (cube.back[1][2] == "white" || cube.back[1][2] == edge)){
+				applyLi()
+				applyD()
+				applyL()
+				placeWhiteFromFront(edge)
+			}
+
+			if ((cube.back[0][1] == "white" || cube.back[0][1] == edge) && (cube.up[0][1] == "white" || cube.up[0][1] == edge)){
+				applyB2()
+				applyD2()
+				placeWhiteFromFront(edge)
+			}
+			
+			if ((cube.back[2][1] == "white" || cube.back[2][1] == edge) && (cube.down[0][1] == "white" || cube.down[2][1] == edge)){
+				applyD2()
+				placeWhiteFromFront(edge)
+			}
+		}
+	}
+}
+
+//R2 L2 U B F
+const solveWhiteEdges = () => {
+	solveWhiteEdge("green")
+	turnCube()
+	solveWhiteEdge("red")
+	turnCube()
+	solveWhiteEdge("blue")
+	turnCube()
+	solveWhiteEdge("orange")
+	turnCube()
+}
+
+
+const solveCube = () => {
+	solveWhiteEdges()
 }
 /*-------------------------------------------------------*/
 
@@ -461,7 +585,12 @@ btnDown.onclick = () => {
 
 btnApply.onclick = () => {
 	let moves = moveInput.value.replaceAll("’", "'")
-	applyMoves(cube, moves.split(" "))
+	applyMoves(moves.split(" "))
+	displayCube(cube.front)
+}
+
+btnSolve.onclick = () => {
+	solveCube()
 	displayCube(cube.front)
 }
 
