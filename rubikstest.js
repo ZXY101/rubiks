@@ -488,7 +488,7 @@ const placeWhiteFromFront = (edge) => {
 
 const solveWhiteEdge = (edge) => {
 	console.log(edge);
-	if (!(cube.front[0][1] == edge && cube.up[2][1] == "white")){
+	if (!isWhiteEdgeSolved(edge)){
 		if (placeWhiteFromFront(edge)){
 			return
 		}
@@ -529,7 +529,7 @@ const solveWhiteEdge = (edge) => {
 				placeWhiteFromFront(edge)
 			}
 			
-			if ((cube.back[2][1] == "white" || cube.back[2][1] == edge) && (cube.down[0][1] == "white" || cube.down[2][1] == edge)){
+			if ((cube.back[2][1] == "white" || cube.back[2][1] == edge) && (cube.down[2][1] == "white" || cube.down[2][1] == edge)){
 				applyD2()
 				placeWhiteFromFront(edge)
 			}
