@@ -58,6 +58,8 @@ class Cube {
 }
 
 let cube = new Cube();
+let moveList = ""
+let solving = false
 
 const applyMoves = (moves) => {
 	moves.forEach((move) => {
@@ -171,6 +173,8 @@ const turnCube = () =>{
 	cube.left = cubeCopy.front
 	rotateFace(cube.up)
 	rotateFace(cube.down, 1)
+	console.log('Applying: Y');
+	if (solving) moveList += "Y "
 }
 
 const rotateFace = (face, dir=0) => {
@@ -189,7 +193,7 @@ const rotateFace = (face, dir=0) => {
 
 //Up
 /*-------------------------------------------------------*/
-const applyU = () => {
+const applyU = (logging = true) => {
 	let cubeCopy = JSON.parse(JSON.stringify(cube));
 	cube.left[0] = cubeCopy.front[0]
 	cube.back[0] = cubeCopy.left[0]
@@ -197,9 +201,10 @@ const applyU = () => {
 	cube.front[0] = cubeCopy.right[0]
 	rotateFace(cube.up)
 	console.log("Applying: U");
+	if (solving && logging) moveList += "U "
 }
 
-const applyUi = () => {
+const applyUi = (logging = true) => {
 	let cubeCopy = JSON.parse(JSON.stringify(cube));
 	cube.left[0] = cubeCopy.back[0]
 	cube.back[0] = cubeCopy.right[0]
@@ -207,12 +212,13 @@ const applyUi = () => {
 	cube.front[0] = cubeCopy.left[0]
 	rotateFace(cube.up, 1)
 	console.log("Applying: Ui");
+	if (solving && logging) moveList += "U' "
 }
 /*-------------------------------------------------------*/
 
 //Down
 /*-------------------------------------------------------*/
-const applyDi = () => {
+const applyDi = (logging = true) => {
 	let cubeCopy = JSON.parse(JSON.stringify(cube));
 	cube.left[2] = cubeCopy.front[2]
 	cube.back[2] = cubeCopy.left[2]
@@ -220,22 +226,24 @@ const applyDi = () => {
 	cube.front[2] = cubeCopy.right[2]
 	rotateFace(cube.down, 1)
 	console.log("Applying: Di");
+	if (solving && logging) moveList += "D' "
 }
 
-const applyD = () => {
+const applyD = (logging = true) => {
 	let cubeCopy = JSON.parse(JSON.stringify(cube));
 	cube.left[2] = cubeCopy.back[2]
 	cube.back[2] = cubeCopy.right[2]
 	cube.right[2] = cubeCopy.front[2]
 	cube.front[2] = cubeCopy.left[2]
 	rotateFace(cube.down)
-	console.log("Applying: D");
+	console.log("Applying: D ");
+	if (solving && logging) moveList += "D "
 }
 /*-------------------------------------------------------*/
 
 //Right
 /*-------------------------------------------------------*/
-const applyR = () => {
+const applyR = (logging = true) => {
 	let cubeCopy = JSON.parse(JSON.stringify(cube));
 	cube.front[0][2] = cubeCopy.down[0][2]
 	cube.front[1][2] = cubeCopy.down[1][2]
@@ -255,9 +263,10 @@ const applyR = () => {
 	
 	rotateFace(cube.right)
 	console.log("Applying: R");
+	if (solving && logging) moveList += "R "
 }
 
-const applyRi = () => {
+const applyRi = (logging = true) => {
 	let cubeCopy = JSON.parse(JSON.stringify(cube));
 	cube.down[0][2] = cubeCopy.front[0][2]
 	cube.down[1][2] = cubeCopy.front[1][2]
@@ -277,12 +286,13 @@ const applyRi = () => {
 	
 	rotateFace(cube.right, 1)
 	console.log("Applying: Ri");
+	if (solving && logging) moveList += "R' "
 }
 /*-------------------------------------------------------*/
 
 //Left
 /*-------------------------------------------------------*/
-const applyL = () => {
+const applyL = (logging = true) => {
 	let cubeCopy = JSON.parse(JSON.stringify(cube));
 	cube.down[0][0] = cubeCopy.front[0][0]
 	cube.down[1][0] = cubeCopy.front[1][0]
@@ -302,9 +312,10 @@ const applyL = () => {
 	
 	rotateFace(cube.left)
 	console.log("Applying: L");
+	if (solving && logging) moveList += "L "
 }
 
-const applyLi = () => {
+const applyLi = (logging = true) => {
 	let cubeCopy = JSON.parse(JSON.stringify(cube));
 	cube.front[0][0] = cubeCopy.down[0][0]
 	cube.front[1][0] = cubeCopy.down[1][0]
@@ -324,12 +335,13 @@ const applyLi = () => {
 	
 	rotateFace(cube.left, 1)
 	console.log("Applying: Li");
+	if (solving && logging) moveList += "L' "
 }
 /*-------------------------------------------------------*/
 
 //Front
 /*-------------------------------------------------------*/
-const applyF = () => {
+const applyF = (logging = true) => {
 	let cubeCopy = JSON.parse(JSON.stringify(cube));
 	cube.up[2][0] = cubeCopy.left[2][2]
 	cube.up[2][1] = cubeCopy.left[1][2]
@@ -349,9 +361,10 @@ const applyF = () => {
 
 	rotateFace(cube.front)
 	console.log("Applying: F");
+	if (solving && logging) moveList += "F "
 }
 
-const applyFi = () => {
+const applyFi = (logging = true) => {
 	let cubeCopy = JSON.parse(JSON.stringify(cube));
 	cube.up[2][0] = cubeCopy.right[0][0]
 	cube.up[2][1] = cubeCopy.right[1][0]
@@ -371,12 +384,13 @@ const applyFi = () => {
 	
 	rotateFace(cube.front, 1)
 	console.log("Applying: Fi");
+	if (solving && logging) moveList += "F' "
 }
 /*-------------------------------------------------------*/
 
 //Back
 /*-------------------------------------------------------*/
-const applyBi = () => {
+const applyBi = (logging = true) => {
 	let cubeCopy = JSON.parse(JSON.stringify(cube));
 	cube.up[0][0] = cubeCopy.left[2][0]
 	cube.up[0][1] = cubeCopy.left[1][0]
@@ -396,9 +410,10 @@ const applyBi = () => {
 
 	rotateFace(cube.back, 1)
 	console.log("Applying: Bi");
+	if (solving && logging) moveList += "B' "
 }
 
-const applyB = () => {
+const applyB = (logging = true) => {
 	let cubeCopy = JSON.parse(JSON.stringify(cube));
 	cube.up[0][0] = cubeCopy.right[0][2]
 	cube.up[0][1] = cubeCopy.right[1][2]
@@ -418,14 +433,15 @@ const applyB = () => {
 	
 	rotateFace(cube.back)
 	console.log("Applying: B");
+	if (solving && logging) moveList += "B "
 }
 
-const applyU2 = () => {applyU(); applyU();}
-const applyD2 = () => {applyD(); applyD();}
-const applyR2 = () => {applyR(); applyR();}
-const applyL2 = () => {applyL(); applyL();}
-const applyF2 = () => {applyF(); applyF();}
-const applyB2 = () => {applyB(); applyB();}
+const applyU2 = () => {applyU(false); applyU(false); if (solving) moveList += "U2 ";}
+const applyD2 = () => {applyD(false); applyD(false); if (solving) moveList += "D2 ";}
+const applyR2 = () => {applyR(false); applyR(false); if (solving) moveList += "R2 ";}
+const applyL2 = () => {applyL(false); applyL(false); if (solving) moveList += "L2 ";}
+const applyF2 = () => {applyF(false); applyF(false); if (solving) moveList += "F2 ";}
+const applyB2 = () => {applyB(false); applyB(false); if (solving) moveList += "B2 ";}
 
 /*-------------------------------------------------------*/
 
@@ -445,8 +461,7 @@ const placeWhiteFromFront = (edge) => {
 		return true
 	}
 	if (cube.front[2][1] == edge && cube.down[0][1] == "white"){
-		applyF()
-		applyF()
+		applyF2()
 		return true
 	}
 
@@ -487,7 +502,6 @@ const placeWhiteFromFront = (edge) => {
 }
 
 const solveWhiteEdge = (edge) => {
-	console.log(edge);
 	if (!isWhiteEdgeSolved(edge)){
 		if (placeWhiteFromFront(edge)){
 			return
@@ -537,6 +551,219 @@ const solveWhiteEdge = (edge) => {
 	}
 }
 
+const cornerAlgo = () => {
+	applyRi()
+	applyDi()
+	applyR()
+	applyD()
+}
+
+// const isWantedCorner = (corner, adj, mainCorner, adjCorner, upperCorner) => {
+// 	let lookingFor = [corner, adj, "white"]
+
+	// if (lookingFor.includes(cube.front[0][2]) && lookingFor.includes(cube.right[0][0]) &&lookingFor.includes(cube.up[2][2]))
+// 		return true
+// 	else if (lookingFor.includes(cube.front[2][2]) && lookingFor.includes(cube.right[2][0]) &&lookingFor.includes(cube.down[0][2]))
+// 		return true
+// 	return false
+// }
+
+const isWantedCorner = (corner, adj, mainCorner, adjCorner, upperCorner) => {
+	let lookingFor = [corner, adj, "white"]
+
+	if (lookingFor.includes(mainCorner) && lookingFor.includes(adjCorner) &&lookingFor.includes(upperCorner))
+		return true
+	return false
+}
+
+const solveWhiteCorner = (corner, adj) =>{
+	if (!isWantedCorner(corner, adj, cube.front[0][2], cube.right[0][0], cube.up[2][2]) &&
+	!isWantedCorner(corner, adj, cube.front[2][2], cube.right[2][0], cube.down[0][2])){
+		console.log('The square aint here');
+		if (isWantedCorner(corner, adj, cube.left[2][2], cube.front[2][0], cube.down[0][0])){
+			applyD()
+		}
+
+		if (isWantedCorner(corner, adj, cube.back[2][2], cube.left[2][0], cube.down[2][0])){
+			applyD2()
+		}
+
+		if (isWantedCorner(corner, adj, cube.right[2][2], cube.back[2][0], cube.down[2][2])){
+			applyDi()
+		}
+
+		if (isWantedCorner(corner, adj, cube.left[0][2], cube.front[0][0], cube.up[2][0])){
+			applyFi()
+			applyD()
+			applyF()
+			applyD()
+		}
+
+		if (isWantedCorner(corner, adj, cube.back[0][2], cube.left[0][0], cube.up[0][0])){
+			applyLi()
+			applyD()
+			applyL()
+			applyD()
+			applyD()
+		}
+
+		if (isWantedCorner(corner, adj, cube.right[0][2], cube.back[0][0], cube.up[0][2])){
+			applyR()
+			applyDi()
+			applyRi()
+			applyDi()
+		}
+	}
+
+	while (!(cube.front[0][2] == corner && cube.right[0][0] == adj && cube.up[2][2] == "white")) {
+		cornerAlgo()
+	}
+}
+const solveLeft = () =>{
+	applyD()
+	applyL()
+	applyDi()
+	applyLi()
+	applyDi()
+	applyFi()
+	applyD()
+	applyF()
+}
+
+const solveRight = () =>{
+	applyDi()
+	applyRi()
+	applyD()
+	applyR()
+	applyD()
+	applyF()
+	applyDi()
+	applyFi()
+}
+
+const getRight = (main, right) =>{
+}
+
+const solveCenterLayer = (main, left, right) => {
+	let leftSolved = false
+	let rightSolved = false
+
+	console.log('-------------------------noisesd + ' + main);
+
+	while (true) {
+		if (cube.front[1][2] == main && cube.right[1][0] == right) break
+		console.log('WRONNGGG');
+		
+
+		if ((cube.front[2][1] == main || cube.front[2][1] == right) && (cube.down[0][1] == main || cube.down[0][1] == right)){
+			solveRight()
+		}
+
+		if ((cube.right[2][1] == main || cube.right[2][1] == right) && (cube.down[1][2] == main || cube.down[1][2] == right)){
+			applyDi()
+			solveRight()
+		}
+
+		if ((cube.back[2][1] == main || cube.back[2][1] == right) && (cube.down[2][1] == main || cube.down[2][1] == right)){
+			applyD2()
+			solveRight()
+		}
+
+		if ((cube.left[2][1] == main || cube.left[2][1] == right) && (cube.down[1][0] == main || cube.down[1][0] == right)){
+			applyD()
+			solveRight()
+		}
+
+		if (cube.front[1][2] == right && cube.right[1][0] == main){
+			solveRight()
+		}
+
+		if ((cube.front[1][0] == main || cube.front[1][0] == right) && (cube.left[1][2] == main || cube.left[1][2] == right)){
+			solveLeft()
+		}
+
+		if ((cube.right[1][2] == main || cube.right[1][2] == right) && (cube.back[1][0] == main || cube.back[1][0] == right)){
+			turnCube()
+			solveRight()
+			turnCube()
+			turnCube()
+			turnCube()
+		}
+
+		if ((cube.left[1][0] == main || cube.left[1][0] == right) && (cube.back[1][2] == main || cube.back[1][2] == right)){
+			
+			console.log('hmmmmmmmmmBROKEmmmm');
+
+			turnCube()
+			turnCube()
+			turnCube()
+			solveLeft()
+			turnCube()
+			
+		}
+		
+	}
+
+	console.log('-------------------------hit');
+
+	while (true) {
+		if (cube.front[1][0] == main && cube.left[1][2] == left) break
+		if ((cube.front[2][1] == main || cube.front[2][1] == left) && (cube.down[0][1] == main || cube.down[0][1] == left)){
+			solveLeft()
+			console.log('naa6');
+		}
+
+		if ((cube.right[2][1] == main || cube.right[2][1] == left) && (cube.down[1][2] == main || cube.down[1][2] == left)){
+			applyDi()
+			solveLeft()
+			console.log('naa5');
+
+		}
+
+		if ((cube.back[2][1] == main || cube.back[2][1] == left) && (cube.down[2][1] == main || cube.down[2][1] == left)){
+			applyD2()
+			solveLeft()
+			console.log('naa4');
+
+		}
+
+		if ((cube.left[2][1] == main || cube.left[2][1] == left) && (cube.down[1][0] == main || cube.down[1][0] == left)){
+			applyD()
+			solveLeft()
+			console.log('naa3');
+		}
+		
+		if (cube.front[1][0] == left && cube.left[1][2] == main){
+			solveLeft()
+			console.log('naa2');
+			
+		}
+		
+		if ((cube.front[1][2] == main || cube.front[1][2] == left) && (cube.right[1][0] == main || cube.right[1][0] == left)){
+			solveRight()
+			console.log('naa1');
+			
+		}
+		
+		if ((cube.right[1][2] == main || cube.right[1][2] == left) && (cube.back[1][0] == main || cube.back[1][0] == left)){
+			turnCube()
+			solveRight()
+			turnCube()
+			turnCube()
+			turnCube()
+		}
+
+		if ((cube.left[1][0] == main || cube.left[1][0] == left) && (cube.back[1][2] == main || cube.back[1][2] == left)){
+			turnCube()
+			turnCube()
+			turnCube()
+			solveLeft()
+			turnCube()
+		}
+	}
+
+}
+
 //R2 L2 U B F
 const solveWhiteEdges = () => {
 	solveWhiteEdge("green")
@@ -549,9 +776,41 @@ const solveWhiteEdges = () => {
 	turnCube()
 }
 
+const solveWhiteCorners = () =>{
+	solveWhiteCorner("green", "red")
+	turnCube()
+	solveWhiteCorner("red", "blue")
+	turnCube()
+	solveWhiteCorner("blue", "orange")
+	turnCube()
+	solveWhiteCorner("orange", "green")
+	turnCube()
+}
+
+const solveCenterLayers = () =>{
+	solveCenterLayer("green", "orange", "red")
+	turnCube()
+	solveCenterLayer("red", "green", "blue")
+	turnCube()
+	solveCenterLayer("blue", "red", "orange")
+	turnCube()
+	solveCenterLayer("orange", "blue", "green")
+	turnCube()
+
+}
+
 
 const solveCube = () => {
+	solving = true
 	solveWhiteEdges()
+	solveWhiteCorners()
+	solveCenterLayers()
+	solving = false
+
+	// moveList = moveList.replaceAll("Y Y Y Y ", "")
+	console.log(moveList);
+	moveList = ""
+	
 }
 /*-------------------------------------------------------*/
 
@@ -587,6 +846,8 @@ btnApply.onclick = () => {
 	let moves = moveInput.value.replaceAll("’", "'")
 	applyMoves(moves.split(" "))
 	displayCube(cube.front)
+	console.log('eeee ' + moveList);
+	
 }
 
 btnSolve.onclick = () => {
@@ -600,6 +861,12 @@ btnReset.onclick = () => {
 	displayCube(cube.front)
 }
 
-
-//R2 D’ B’ D F2 R F2 R2 U L’ F2 U’ B’ L2 R D B’ R’ B2 L2 F2 L2 R2 U2 D2
 //R2 D' B' D F2 R F2 R2 U L' F2 U' B' L2 R D B' R' B2 L2 F2 L2 R2 U2 D2
+//D F2 Y D2 F2 Y L' D L D R F' R' Y L' D L F2 Y D2 R' D'
+//R D Y R' D' R D Y Y D' R' D' R D R' D' R D R' D' R D Y
+
+//solve left
+//D' R' D R D F D' F'
+
+//solve right
+//D L D' L' D' F' D F
