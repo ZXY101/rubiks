@@ -807,7 +807,16 @@ const yellowCrossAlgo = () =>{
 	applyFi()
 }
 
-
+const yellowEdgeAlgo = () =>{
+	applyL()
+	applyD()
+	applyLi()
+	applyD()
+	applyL()
+	applyD2()
+	applyLi()
+	applyD()
+}
 
 const solveYellowCross = () =>{
 	if (cube.down[0][1] == "yellow" && cube.down[1][0] == "yellow" && cube.down[1][2] == "yellow" && cube.down[2][1] == "yellow"){
@@ -848,8 +857,21 @@ const solveYellowCross = () =>{
 		yellowCrossAlgo()
 		return
 	}
+}
 
-
+const solveYellowEdges = () =>{
+	while (!(cube.front[2][1] == "green" && cube.back[2][1] == "blue" && cube.left[2][1] == "orange" && cube.right[2][1] == "red")){
+		while (cube.front[2][1] != "green") applyD()
+		if (cube.back[2][1] == "blue"){
+			turnCube()
+			turnCube()
+			yellowEdgeAlgo()
+			turnCube()
+			turnCube()
+		}
+		yellowEdgeAlgo()
+		while (cube.front[2][1] != "green") applyD()
+	}
 
 }
 
@@ -859,6 +881,7 @@ const solveCube = () => {
 	solveWhiteCorners()
 	solveCenterLayers()
 	solveYellowCross()
+	solveYellowEdges()
 	solving = false
 
 	// moveList = moveList.replaceAll("Y Y Y Y ", "")
@@ -927,3 +950,6 @@ btnReset.onclick = () => {
 
 //yellowcross
 //F D L D' L' F'
+
+//swap edges
+//L D L' D L D2 L' D
