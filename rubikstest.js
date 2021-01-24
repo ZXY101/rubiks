@@ -645,8 +645,6 @@ const getRight = (main, right) =>{
 }
 
 const solveCenterLayer = (main, left, right) => {
-	let leftSolved = false
-	let rightSolved = false
 
 	console.log('-------------------------noisesd + ' + main);
 
@@ -818,6 +816,24 @@ const yellowEdgeAlgo = () =>{
 	applyD()
 }
 
+const cycleCornerAlgo = () =>{
+	applyD()
+	applyL()
+	applyDi()
+	applyRi()
+	applyD()
+	applyLi()
+	applyDi()
+	applyR()
+}
+
+const orientCorners = () =>{
+	applyLi()
+	applyUi()
+	applyL()
+	applyU()
+}
+
 const solveYellowCross = () =>{
 	if (cube.down[0][1] == "yellow" && cube.down[1][0] == "yellow" && cube.down[1][2] == "yellow" && cube.down[2][1] == "yellow"){
 		console.log('already solved');
@@ -857,6 +873,9 @@ const solveYellowCross = () =>{
 		yellowCrossAlgo()
 		return
 	}
+
+	yellowCrossAlgo()
+	solveYellowCross()
 }
 
 const solveYellowEdges = () =>{
@@ -872,6 +891,94 @@ const solveYellowEdges = () =>{
 		yellowEdgeAlgo()
 		while (cube.front[2][1] != "green") applyD()
 	}
+}
+
+let c1Solved
+let c2Solved
+let c3Solved
+let c4Solved
+
+let corner1
+let corner2
+let corner3
+let corner4
+
+const checkCorners = () => {
+	corner1 = [cube.front[1][1], cube.left[1][1], "yellow"]
+	corner2 = [cube.left[1][1], cube.back[1][1], "yellow"]
+	corner3 = [cube.back[1][1], cube.right[1][1], "yellow"]
+	corner4 = [cube.right[1][1], cube.front[1][1], "yellow"]
+
+	c1Solved = false
+	c2Solved = false
+	c3Solved = false
+	c4Solved = false
+
+	if (corner1.includes(cube.front[2][0]) && corner1.includes(cube.left[2][2])  && corner1.includes(cube.down[0][0])){
+		c1Solved = true
+	}
+	if (corner2.includes(cube.left[2][0]) && corner2.includes(cube.back[2][2])  && corner2.includes(cube.down[2][0])){
+		c2Solved = true
+	}
+	if (corner3.includes(cube.back[2][0]) && corner3.includes(cube.right[2][2])  && corner3.includes(cube.down[2][2])){
+		c3Solved = true
+	}
+	if (corner4.includes(cube.right[2][0]) && corner4.includes(cube.front[2][2])  && corner4.includes(cube.down[0][2])){
+		c4Solved = true
+	}
+}
+
+const cycleCorners = () =>{
+	// let corner1 = ["green", "red", "yellow"]
+	// let corner2 = ["red", "blue", "yellow"]
+	// let corner3 = ["blue", "orange", "yellow"]
+	// let corner4 = ["orange", "green", "yellow"]
+
+	checkCorners()
+
+	if (c1Solved && c2Solved && c3Solved && c4Solved){
+		return
+	}
+	
+	if (!c1Solved && !c1Solved && !c1Solved && !c1Solved){
+		cycleCornerAlgo()
+	}
+	checkCorners()
+
+	
+	
+	if (c1Solved){
+		while (!(c1Solved && c2Solved && c3Solved && c4Solved)){
+			cycleCornerAlgo()
+			checkCorners()
+		}
+		return
+	}
+	
+	if (c2Solved){
+		turnCube()
+		turnCube()
+		turnCube()
+		cycleCorners()
+		turnCube()
+	}
+
+	if (c3Solved){
+		turnCube()
+		turnCube()
+		cycleCorners()
+		turnCube()
+		turnCube()
+	}
+
+	if (c4Solved){
+		turnCube()
+		cycleCorners()
+		turnCube()
+		turnCube()
+		turnCube()
+	}
+	
 
 }
 
@@ -882,6 +989,9 @@ const solveCube = () => {
 	solveCenterLayers()
 	solveYellowCross()
 	solveYellowEdges()
+	cycleCorners()
+
+	orientCorners()
 	solving = false
 
 	// moveList = moveList.replaceAll("Y Y Y Y ", "")
@@ -948,8 +1058,14 @@ btnReset.onclick = () => {
 //solve right
 //D L D' L' D' F' D F
 
-//yellowcross
+//yellow cross
 //F D L D' L' F'
 
 //swap edges
 //L D L' D L D2 L' D
+
+//cycle corners
+//D L D' R' D L' D' R
+
+//orient corners
+//L' U' L U
