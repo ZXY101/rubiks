@@ -827,7 +827,7 @@ const cycleCornerAlgo = () =>{
 	applyR()
 }
 
-const orientCorners = () =>{
+const orientCornersAlgo = () =>{
 	applyLi()
 	applyUi()
 	applyL()
@@ -929,23 +929,24 @@ const checkCorners = () => {
 }
 
 const cycleCorners = () =>{
-	// let corner1 = ["green", "red", "yellow"]
-	// let corner2 = ["red", "blue", "yellow"]
-	// let corner3 = ["blue", "orange", "yellow"]
-	// let corner4 = ["orange", "green", "yellow"]
-
 	checkCorners()
 
 	if (c1Solved && c2Solved && c3Solved && c4Solved){
 		return
 	}
 	
-	if (!c1Solved && !c1Solved && !c1Solved && !c1Solved){
+	console.log(c1Solved);
+	console.log(c2Solved);
+	console.log(c3Solved);
+	console.log(c4Solved);
+	if (!c1Solved && !c2Solved && !c3Solved && !c4Solved){
 		cycleCornerAlgo()
 	}
 	checkCorners()
-
-	
+	console.log(c1Solved);
+	console.log(c2Solved);
+	console.log(c3Solved);
+	console.log(c4Solved);
 	
 	if (c1Solved){
 		while (!(c1Solved && c2Solved && c3Solved && c4Solved)){
@@ -978,8 +979,25 @@ const cycleCorners = () =>{
 		turnCube()
 		turnCube()
 	}
-	
+}
 
+const orientCorners = () =>{
+	while (cube.down[0][0] != "yellow"){
+		orientCornersAlgo()
+	}
+	applyD()
+	while (cube.down[0][0] != "yellow"){
+		orientCornersAlgo()
+	}
+	applyD()
+	while (cube.down[0][0] != "yellow"){
+		orientCornersAlgo()
+	}
+	applyD()
+	while (cube.down[0][0] != "yellow"){
+		orientCornersAlgo()
+	}
+	applyD()
 }
 
 const solveCube = () => {
@@ -990,12 +1008,11 @@ const solveCube = () => {
 	solveYellowCross()
 	solveYellowEdges()
 	cycleCorners()
-
 	orientCorners()
-	solving = false
 
-	// moveList = moveList.replaceAll("Y Y Y Y ", "")
-	console.log(moveList);
+	moveList = moveList.replaceAll("Y Y Y Y ", "")
+	moveList = moveList.replaceAll("D D D D ", "")
+	console.log(moveList == "" ? "Solved" : moveList);
 	moveList = ""
 	
 }
