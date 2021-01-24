@@ -796,15 +796,69 @@ const solveCenterLayers = () =>{
 	turnCube()
 	solveCenterLayer("orange", "blue", "green")
 	turnCube()
-
 }
 
+const yellowCrossAlgo = () =>{
+	applyF()
+	applyD()
+	applyL()
+	applyDi()
+	applyLi()
+	applyFi()
+}
+
+
+
+const solveYellowCross = () =>{
+	if (cube.down[0][1] == "yellow" && cube.down[1][0] == "yellow" && cube.down[1][2] == "yellow" && cube.down[2][1] == "yellow"){
+		console.log('already solved');
+		return
+	}
+
+	if (cube.down[1][0] == "yellow" && cube.down[1][2] == "yellow"){
+		console.log('nani');
+		yellowCrossAlgo()
+	}
+
+	if (cube.down[0][1] == "yellow" && cube.down[2][1] == "yellow"){
+		console.log('meow');
+		applyD()
+		yellowCrossAlgo()
+	}
+
+	if (cube.down[2][1] == "yellow" && cube.down[1][2] == "yellow"){
+		yellowCrossAlgo()
+		return
+	}
+
+	if (cube.down[2][1] == "yellow" && cube.down[1][0] == "yellow"){
+		applyDi()
+		yellowCrossAlgo()
+		return
+	}
+
+	if (cube.down[1][0] == "yellow" && cube.down[0][1] == "yellow"){
+		applyD2()
+		yellowCrossAlgo()
+		return
+	}
+
+	if (cube.down[0][1] == "yellow" && cube.down[1][2] == "yellow"){
+		applyD()
+		yellowCrossAlgo()
+		return
+	}
+
+
+
+}
 
 const solveCube = () => {
 	solving = true
 	solveWhiteEdges()
 	solveWhiteCorners()
 	solveCenterLayers()
+	solveYellowCross()
 	solving = false
 
 	// moveList = moveList.replaceAll("Y Y Y Y ", "")
@@ -870,3 +924,6 @@ btnReset.onclick = () => {
 
 //solve right
 //D L D' L' D' F' D F
+
+//yellowcross
+//F D L D' L' F'
