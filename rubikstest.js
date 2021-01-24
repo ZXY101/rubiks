@@ -21,6 +21,7 @@ let btnReset = document.getElementById("btnReset")
 let moveInput = document.getElementById("moveInput")
 
 let faceHeading = document.getElementById("face")
+let solution = document.getElementById("solution")
 
 class Cube {
 	constructor(){
@@ -544,16 +545,6 @@ const cornerAlgo = () => {
 	applyD()
 }
 
-// const isWantedCorner = (corner, adj, mainCorner, adjCorner, upperCorner) => {
-// 	let lookingFor = [corner, adj, "white"]
-
-	// if (lookingFor.includes(cube.front[0][2]) && lookingFor.includes(cube.right[0][0]) &&lookingFor.includes(cube.up[2][2]))
-// 		return true
-// 	else if (lookingFor.includes(cube.front[2][2]) && lookingFor.includes(cube.right[2][0]) &&lookingFor.includes(cube.down[0][2]))
-// 		return true
-// 	return false
-// }
-
 const isWantedCorner = (corner, adj, mainCorner, adjCorner, upperCorner) => {
 	let lookingFor = [corner, adj, "white"]
 
@@ -966,10 +957,31 @@ const solveCube = () => {
 	solveYellowEdges()
 	cycleCorners()
 	orientCorners()
+	solving = false
 
 	moveList = moveList.replaceAll("Y Y Y Y ", "")
 	moveList = moveList.replaceAll("D D D D ", "")
-	console.log(moveList == "" ? "Already Solved" : moveList);
+
+	if (moveList == ""){
+		console.log("Already Solved!");
+		solution.innerHTML = "<h2>Already Solved!</h2>"
+		return
+	}
+
+	console.log(moveList);
+	solution.innerHTML = "<h2>Soltuion</h2>"
+
+	let toPrint = moveList.split(' ')
+	toPrint.forEach((move, index) =>{
+		solution.innerHTML+= move
+		if (index > 1 && index % 30 == 0){
+			solution.innerHTML+= "</br>"
+		}else{
+			solution.innerHTML+= " "
+		}
+
+	})
+
 	moveList = ""
 	
 }
@@ -1007,22 +1019,24 @@ btnApply.onclick = () => {
 	let moves = moveInput.value.replaceAll("’", "'")
 	applyMoves(moves.split(" "))
 	displayCube(cube.front)
+	faceHeading.innerHTML ="Front"
 }
 
 btnSolve.onclick = () => {
 	solveCube()
 	displayCube(cube.front)
+	faceHeading.innerHTML ="Front"
 }
 
 btnReset.onclick = () => {
 	moveInput.value = ""
 	cube = new Cube()
 	displayCube(cube.front)
+	faceHeading.innerHTML ="Front"
+	solution.innerHTML = ""
 }
 
 //R2 D' B' D F2 R F2 R2 U L' F2 U' B' L2 R D B' R' B2 L2 F2 L2 R2 U2 D2
-//D F2 Y D2 F2 Y L' D L D R F' R' Y L' D L F2 Y D2 R' D'
-//R D Y R' D' R D Y Y D' R' D' R D R' D' R D R' D' R D Y
 
 //solve left
 //D' R' D R D F D' F'
